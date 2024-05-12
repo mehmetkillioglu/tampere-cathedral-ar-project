@@ -48,12 +48,6 @@
       align-items: center;
     }
 
-    .tab {
-      display: none;
-    }
-    .tab.active {
-      display: block;
-    }
     .arjs-loader div {
       text-align: center;
       font-size: 1.25em;
@@ -65,143 +59,49 @@
     <div class="arjs-loader">
       <div>Loading, please wait...</div>
     </div>
-
-    <!-- a-frame scene -->
-    <a-scene
-      vr-mode-ui="enabled: false;"
-      renderer="logarithmicDepthBuffer: true;"
-      embedded
-      arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: true;"
-    >
-      <a-nft
-        type="nft"
-        url="data/melek/melek"
-        tag="melek"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      <a-nft
-        type="nft"
-        url="data/resurrection/the_resurrection"
-        tag="resurrection"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      <a-nft
-        type="nft"
-        url="data/garden_of_death/garden_of_death"
-        tag="garden_of_death"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      <a-nft
-        type="nft"
-        url="data/serpent/serpent"
-        tag="serpent"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      <a-nft
-        type="nft"
-        url="data/serpent/serpent1"
-        tag="serpent"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      <a-nft
-        type="nft"
-        url="data/serpent/serpent2"
-        tag="serpent"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      <a-nft
-        type="nft"
-        url="data/serpent/serpent3"
-        tag="serpent"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      <a-nft
-        type="nft"
-        url="data/serpent/serpent4"
-        tag="serpent"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      <a-nft
-        type="nft"
-        url="data/serpent/serpent5"
-        tag="serpent"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      <a-nft
-        type="nft"
-        url="data/serpent/serpent6"
-        tag="serpent"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance=".01"
-        smoothThreshold="5"
-      >
-      </a-nft>
-      </a-nft>
-      <!-- <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false;'> -->
-      <!-- Marker Definitions and other AR content -->
-      <a-marker preset="hiro" tag="garden_of_death">
-        <!-- <a-text value="Marker Hiro Detected" color="red"  rotation="-90 0 0"></a-text>astro_clock -->
-        <!-- <a-box position="0 0.5 0" rotation="0 45 0" color="yellow"></a-box> -->
-      </a-marker>
-
-      <a-marker preset="kanji">
-        <!-- <a-box position="0 0.5 0" rotation="0 45 0" color="blue"></a-box> -->
-      </a-marker>
-
+    <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded arjs="trackingMethod: best; sourceType: webcam;debugUIEnabled: true;">
+      <a-nft type="nft" url="data/melek/melek" tag="melek" tag_id="melek01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <!-- <a-nft type="nft" url="data/resurrection/the_resurrection" tag="resurrection" tag_id="resurrection01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
+      <a-nft type="nft" url="data/resurrection/the_resurrection2" tag="resurrection" tag_id="resurrection02" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <!-- <a-nft type="nft" url="data/resurrection/the_resurrection3" tag="resurrection" tag_id="resurrection03" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
+      <a-nft type="nft" url="data/glass1/glass_1_1" tag="glass_1" tag_id="glass_1_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/glass2/glass_2_3" tag="glass_2" tag_id="glass_2_3" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/glass3/glass_3_2" tag="glass_3" tag_id="glass_3_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/glass4/glass_4_2" tag="glass_4" tag_id="glass_4_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/garden_of_death/garden_of_death" tag="garden_of_death" tag_id="garden_of_death01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/pipe_organ/pipe_organ" tag="pipe_organ" tag_id="pipe_organ01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/serpent/serpent" tag="serpent" tag_id="serpent_0" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/serpent/serpent1" tag="serpent" tag_id="serpent_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/serpent/serpent2" tag="serpent" tag_id="serpent_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/serpent/serpent3" tag="serpent" tag_id="serpent_3" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/serpent/serpent4" tag="serpent" tag_id="serpent_4" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/serpent/serpent5" tag="serpent" tag_id="serpent_5" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-nft type="nft" url="data/serpent/serpent6" tag="serpent" tag_id="serpent_6" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+      <a-marker preset="hiro" tag="garden_of_death"></a-marker>
+      <a-marker preset="kanji"></a-marker>
       <a-entity camera></a-entity>
     </a-scene>
 
     <div id="infoDrawer">
       <div id="toggleButton">Tap here for more information</div>
+      <div id="detectedMarkers">Markers: </div>
       <div id="infoContent">Information will be loaded here</div>
     </div>
 
     <script>
+      let activeMarkers = {};
       document.querySelectorAll("a-marker, a-nft").forEach((marker) => {
         var markerName =
           marker.getAttribute("preset") || marker.getAttribute("tag");
+        var markerTagId = marker.getAttribute("tag_id");
 
         var markerLost = false;
         marker.addEventListener("markerFound", function () {
           markerLost = false;
           var drawer = document.getElementById("infoDrawer");
+          var detectedMarkers = document.getElementById("detectedMarkers");
           var content = document.getElementById("infoContent");
+          activeMarkers[markerTagId] = true;
           fetch(`details/${markerName}.html`)
             .then((response) => response.text())
             .then((data) => {
@@ -209,6 +109,8 @@
               drawer.classList.add("open");
               // drawer.className = 'open';
             });
+            // Add contents of active markers
+          detectedMarkers.innerText = "Markers: " + Object.keys(activeMarkers).join(", ");
           content.innerHTML =
             "Information about " + marker.getAttribute("preset");
           drawer.className = "open";
@@ -229,6 +131,7 @@
         marker.addEventListener("markerLost", function () {
           markerLost = true;
           var drawer = document.getElementById("infoDrawer");
+          delete activeMarkers[markerTagId];
           if (drawer.classList.contains("open")) {
             drawer.className = "";
           }
