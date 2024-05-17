@@ -107,8 +107,8 @@
   <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
     <a-nft type="nft" url="data/wounded_angel/wounded_angel" tag="wounded_angel" tag_id="wounded_angel01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/resurrection/the_resurrection" tag="resurrection" tag_id="resurrection01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
-    <a-nft type="nft" url="data/resurrection/the_resurrection2" tag="resurrection" tag_id="resurrection02" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
-    <a-nft type="nft" url="data/resurrection/the_resurrection3" tag="resurrection" tag_id="resurrection03" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <!-- <a-nft type="nft" url="data/resurrection/the_resurrection2" tag="resurrection" tag_id="resurrection02" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
+    <!-- <a-nft type="nft" url="data/resurrection/the_resurrection3" tag="resurrection" tag_id="resurrection03" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
     <a-nft type="nft" url="data/glass1/glass_1_1" tag="glass_1" tag_id="glass_1_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/glass2/glass_2_3" tag="glass_2" tag_id="glass_2_3" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/glass2/glass_2_2" tag="glass_2" tag_id="glass_2_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
@@ -118,13 +118,13 @@
     <a-nft type="nft" url="data/glass6/glass_6_1" tag="glass_6" tag_id="glass_6_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/garden_of_death/garden_of_death" tag="garden_of_death" tag_id="garden_of_death01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/pipe_organ/pipe_organ" tag="pipe_organ" tag_id="pipe_organ01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
-    <!-- <a-nft type="nft" url="data/serpent/serpent" tag="serpent" tag_id="serpent_0" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <!-- <a-nft type="nft" url="data/serpent/serpent" tag="serpent" tag_id="serpent_0" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
     <a-nft type="nft" url="data/serpent/serpent1" tag="serpent" tag_id="serpent_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
-    <a-nft type="nft" url="data/serpent/serpent2" tag="serpent" tag_id="serpent_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
+    <a-nft type="nft" url="data/serpent/serpent2" tag="serpent" tag_id="serpent_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/serpent/serpent3" tag="serpent" tag_id="serpent_3" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
-    <!-- <a-nft type="nft" url="data/serpent/serpent4" tag="serpent" tag_id="serpent_4" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
-    <a-nft type="nft" url="data/serpent/serpent5" tag="serpent" tag_id="serpent_5" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
-    <a-nft type="nft" url="data/serpent/serpent6" tag="serpent" tag_id="serpent_6" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
+    <a-nft type="nft" url="data/serpent/serpent4" tag="serpent" tag_id="serpent_4" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <!-- <a-nft type="nft" url="data/serpent/serpent5" tag="serpent" tag_id="serpent_5" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
+    <a-nft type="nft" url="data/serpent/serpent6" tag="serpent" tag_id="serpent_6" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-marker preset="hiro" tag="garden_of_death"></a-marker>
     <a-marker preset="kanji"></a-marker>
     <a-entity camera></a-entity>
@@ -143,8 +143,9 @@
     <div class="zoomButton" data-zoom="2">2x</div>
     <div class="zoomButton" data-zoom="5">5x</div>
   </div>
-  <div id="reloadCameraButton" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
-    <div><button onclick="reloadCamera('720p')">Reload Camera 720p</button></div>
+  <div id="reloadCameraButton" style="position: fixed; top: 10px; right: 10px; z-index: 1000; text-align: right;">
+    <div style="margin-bottom: 2px;"><button onclick="reloadCamera('480p')">Reload Camera 480p</button></div>
+    <div style="margin-bottom: 2px;"><button onclick="reloadCamera('720p')">Reload Camera 720p</button></div>
     <div><button onclick="reloadCamera('1080p')">Reload Camera 1080p</button></div>
   </div>
 
@@ -162,10 +163,24 @@
         video: {
           deviceId: deviceId ? { exact: deviceId } : undefined,
           aspectRatio: { ideal: 16/9},
-          width: resolution === '720p' ? { min: 1280, ideal: 1280, max: 1920 } : { min: 1920, ideal: 1920, max: 1920 },
-          height: resolution === '720p' ? { min: 720, ideal: 720, max: 1080 } : { min: 1080, ideal: 1080, max: 1920 },
         }
       };
+
+      switch (resolution) {
+        case '480p':
+          constraints.video.width = { min: 640, ideal: 640, max: 640 };
+          constraints.video.height = { min: 480, ideal: 480, max: 480 };
+          break;
+        case '1080p':
+          constraints.video.width = { min: 1920, ideal: 1920, max: 1920 };
+          constraints.video.height = { min: 1080, ideal: 1080, max: 1080 };
+          break;
+        case '720p':
+        default:
+          constraints.video.width = { min: 1280, ideal: 1280, max: 1280 };
+          constraints.video.height = { min: 720, ideal: 720, max: 720 };
+          break;
+      }
       console.log('Trying to initialize camera with constraints:', constraints);
       try {
         currentStream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -248,7 +263,7 @@
         if (capabilities.zoom) {
           videoTrack.applyConstraints({ advanced: [{ zoom: zoomLevel }] });
         }
-        updateCameraInfo();
+        // updateCameraInfo();
       });
     });
   
