@@ -105,7 +105,7 @@
     <div>Loading, please wait...</div>
   </div>
   <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
-    <a-nft type="nft" url="data/melek/melek" tag="melek" tag_id="melek01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/wounded_angel/wounded_angel" tag="wounded_angel" tag_id="wounded_angel01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/resurrection/the_resurrection" tag="resurrection" tag_id="resurrection01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/resurrection/the_resurrection2" tag="resurrection" tag_id="resurrection02" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/resurrection/the_resurrection3" tag="resurrection" tag_id="resurrection03" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
@@ -204,7 +204,13 @@
       video.srcObject = currentStream;
     }
 
-
+    document.getElementById('infoDrawer').addEventListener('transitionend', function() {
+      var drawer = document.getElementById('infoDrawer');
+      var isFull = drawer.classList.contains('full'); // replace this with your own condition
+      document.getElementById('cameraSelector').style.display = isFull ? 'none' : 'block';
+      document.getElementById('zoomButtons').style.display = isFull ? 'none' : 'block';
+      document.getElementById('reloadCameraButton').style.display = isFull ? 'none' : 'block';
+    });
     function reloadCamera(resolution) {
       const cameraSelector = document.getElementById('cameraSelector');
       if (cameraSelector.length > 0) {
@@ -255,21 +261,23 @@
         }
     });
 
-    // The rest of your marker detection code...
     document.addEventListener('DOMContentLoaded', function () {
       const markersActive = {};
       const tagTimeouts = {};
       document.querySelectorAll("a-nft").forEach((marker) => {
         const tag = marker.getAttribute("tag");
+        const tagId = marker.getAttribute("tag_id");
         marker.addEventListener("markerFound", function () {
           if (!markersActive[tag]) {
             markersActive[tag] = {
               elements: [],
-              lastDetected: Date.now()
+              lastDetected: Date.now(),
+              detectedOrder: []
             };
           }
           markersActive[tag].elements.push(marker);
           markersActive[tag].lastDetected = Date.now();
+          markersActive[tag].detectedOrder.push(tagId);
 
           updateTabs();
           showContent(tag); // Update content when new tag is detected
@@ -279,15 +287,16 @@
           setTimeout(() => {
             if (Date.now() - markersActive[tag].lastDetected >= 2000) {
               markersActive[tag].elements = markersActive[tag].elements.filter(m => m !== marker);
+              markersActive[tag].detectedOrder = markersActive[tag].detectedOrder.filter(id => id !== tagId);
               if (markersActive[tag].elements.length === 0) {
                 if (!document.getElementById("infoDrawer").classList.contains('full')) {
                   delete markersActive[tag];
                   updateTabs();
                 } else {
-                  tagTimeouts[tag] = setTimeout(() => {
+                  // tagTimeouts[tag] = setTimeout(() => {
                     delete markersActive[tag];
-                    updateTabs();
-                  }, 2000); // Additional timeout if drawer is in full state
+                    // updateTabs();
+                  // }, 2000); // Additional timeout if drawer is in full state
                 }
               }
             }
@@ -298,6 +307,12 @@
       const toggleButton = document.getElementById("toggleButton");
       toggleButton.addEventListener('click', function () {
         const drawer = document.getElementById("infoDrawer");
+        if (drawer.classList.contains('full')) {
+          // Check if any marker is there. If not, close the drawer
+          if (Object.keys(markersActive).length === 0) {
+            drawer.classList.remove('open', 'full');
+          }
+        }
         if (drawer.classList.contains('open')) {
           drawer.classList.toggle('full');
         }
@@ -331,6 +346,7 @@
           });
       }
     });
+
   </script>
 </body>
 </html>
