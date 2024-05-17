@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+  <style>
+    #infoDrawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      height: 0;
+      overflow: auto;
+      transition: height 0.5s ease;
+    }
+    #infoDrawer.open {
+      height: 50%; /* Adjust height to control how much it covers */
+    }
+    #infoDrawer.full {
+      height: 100%;
+    }
+    #infoContent {
+      padding: 20px;
+    }
+    #toggleButton {
+      display: block;
+      padding: 10px;
+      text-align: center;
+      background: #f0f0f0;
+      cursor: pointer;
+    }
+    .tabs-container {
+      display: flex;
+      background: #eee;
+      padding: 5px;
+    }
+    .tab {
+      padding: 10px;
+      cursor: pointer;
+    }
+    #cameraSelector, #aspectRatioSelector {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+    }
+    #aspectRatioSelector {
+      top: 50px;
+    }
+    /* .zoomButton {
+      left: auto;
+      right: 10px;
+    } */
+    #zoomButtons {
+      position: fixed;
+      top: 90px;
+      left: 10px;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+    }
+    .zoomButton {
+      margin: 5px;
+      padding: 10px;
+      background: #f0f0f0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body style="margin: 0; overflow: hidden">
+  <div class="arjs-loader">
+    <div>Loading, please wait...</div>
+  </div>
+  <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;">
+    <a-nft type="nft" url="data/melek/melek" tag="melek" tag_id="melek01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/resurrection/the_resurrection" tag="resurrection" tag_id="resurrection01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/resurrection/the_resurrection2" tag="resurrection" tag_id="resurrection02" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/resurrection/the_resurrection3" tag="resurrection" tag_id="resurrection03" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/glass1/glass_1_1" tag="glass_1" tag_id="glass_1_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/glass2/glass_2_3" tag="glass_2" tag_id="glass_2_3" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/glass2/glass_2_2" tag="glass_2" tag_id="glass_2_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/glass3/glass_3_2" tag="glass_3" tag_id="glass_3_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/glass4/glass_4_2" tag="glass_4" tag_id="glass_4_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/glass5/glass_5_1" tag="glass_5" tag_id="glass_5_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/glass6/glass_6_1" tag="glass_6" tag_id="glass_6_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/garden_of_death/garden_of_death" tag="garden_of_death" tag_id="garden_of_death01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/pipe_organ/pipe_organ" tag="pipe_organ" tag_id="pipe_organ01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <!-- <a-nft type="nft" url="data/serpent/serpent" tag="serpent" tag_id="serpent_0" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/serpent/serpent1" tag="serpent" tag_id="serpent_1" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/serpent/serpent2" tag="serpent" tag_id="serpent_2" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
+    <a-nft type="nft" url="data/serpent/serpent3" tag="serpent" tag_id="serpent_3" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <!-- <a-nft type="nft" url="data/serpent/serpent4" tag="serpent" tag_id="serpent_4" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/serpent/serpent5" tag="serpent" tag_id="serpent_5" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
+    <a-nft type="nft" url="data/serpent/serpent6" tag="serpent" tag_id="serpent_6" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft> -->
+    <a-marker preset="hiro" tag="garden_of_death"></a-marker>
+    <a-marker preset="kanji"></a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <div id="infoDrawer">
+    <div id="toggleButton">Tap here for more information</div>
+    <div id="tabsContainer" class="tabs-container"></div>
+    <div id="infoContent">Information will be loaded here</div>
+  </div>
+
+  <select id="cameraSelector"></select>
+  <select id="aspectRatioSelector">
+    <option value="4:3">4:3</option>
+    <option value="16:9">16:9</option>
+    <option value="1:1">1:1</option>
+  </select>
+  <div id="zoomButtons">
+    <div class="zoomButton" data-zoom="1">1x</div>
+    <div class="zoomButton" data-zoom="2">2x</div>
+    <div class="zoomButton" data-zoom="5">5x</div>
+  </div>
+
+  <!-- <button class="zoomButton" data-zoom="1">1x</button>
+  <button class="zoomButton" data-zoom="2">2x</button>
+  <button class="zoomButton" data-zoom="5">5x</button> -->
+
+  <script>
+    let currentStream;
+
+    // Function to initialize camera
+    async function initCamera(deviceId) {
+      if (currentStream) {
+        currentStream.getTracks().forEach(track => track.stop());
+      }
+      const constraints = {
+        video: {
+          deviceId: deviceId ? { exact: deviceId } : undefined,
+          aspectRatio: 16/9,
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      };
+      currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+      const videoTracks = currentStream.getVideoTracks();
+      const videoTrack = videoTracks[0];
+      const capabilities = videoTrack.getCapabilities();
+      
+      if (capabilities.exposureMode) {
+        videoTrack.applyConstraints({ advanced: [{ exposureMode: 'continuous' }] });
+      }
+
+      const video = document.querySelector('video');
+      video.srcObject = currentStream;
+    }
+
+    // Populate camera selection dropdown
+    async function populateCameraOptions() {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videoDevices = devices.filter(device => device.kind === 'videoinput' && !device.label.toLowerCase().includes('front'));
+      const cameraSelector = document.getElementById('cameraSelector');
+      cameraSelector.innerHTML = '';
+      videoDevices.forEach(device => {
+        const option = document.createElement('option');
+        option.value = device.deviceId;
+        option.text = device.label || `Camera ${cameraSelector.length + 1}`;
+        cameraSelector.appendChild(option);
+      });
+    }
+
+    // Handle camera selection change
+    document.getElementById('cameraSelector').addEventListener('change', (event) => {
+      initCamera(event.target.value);
+    });
+
+    // Handle aspect ratio change
+    document.getElementById('aspectRatioSelector').addEventListener('change', (event) => {
+      const [w, h] = event.target.value.split(':').map(Number);
+      const aspectRatio = w / h;
+      const video = document.querySelector('video');
+      video.style.width = `${aspectRatio * 100}%`;
+      video.style.height = '100%';
+    });
+
+    // Handle zoom buttons
+    document.querySelectorAll('.zoomButton').forEach(button => {
+      button.addEventListener('click', () => {
+        const zoomLevel = Number(button.getAttribute('data-zoom'));
+        const videoTracks = currentStream.getVideoTracks();
+        const videoTrack = videoTracks[0];
+        const capabilities = videoTrack.getCapabilities();
+        
+        if (capabilities.zoom) {
+          videoTrack.applyConstraints({ advanced: [{ zoom: zoomLevel }] });
+        }
+      });
+    });
+
+    // Initialize on page load
+    window.addEventListener('load', async () => {
+      await populateCameraOptions();
+      const cameraSelector = document.getElementById('cameraSelector');
+      if (cameraSelector.length > 0) {
+        initCamera(cameraSelector.value);
+      }
+    });
+
+    // The rest of your marker detection code...
+    document.addEventListener('DOMContentLoaded', function () {
+      const markersActive = {};
+      const tagTimeouts = {};
+
+      document.querySelectorAll("a-nft").forEach((marker) => {
+        const tag = marker.getAttribute("tag");
+        marker.addEventListener("markerFound", function () {
+          if (!markersActive[tag]) {
+            markersActive[tag] = {
+              elements: [],
+              lastDetected: Date.now()
+            };
+          }
+          markersActive[tag].elements.push(marker);
+          markersActive[tag].lastDetected = Date.now();
+
+          updateTabs();
+          showContent(tag); // Update content when new tag is detected
+        });
+
+        marker.addEventListener("markerLost", function () {
+          setTimeout(() => {
+            if (Date.now() - markersActive[tag].lastDetected >= 2000) {
+              markersActive[tag].elements = markersActive[tag].elements.filter(m => m !== marker);
+              if (markersActive[tag].elements.length === 0) {
+                if (!document.getElementById("infoDrawer").classList.contains('full')) {
+                  delete markersActive[tag];
+                  updateTabs();
+                } else {
+                  tagTimeouts[tag] = setTimeout(() => {
+                    delete markersActive[tag];
+                    updateTabs();
+                  }, 2000); // Additional timeout if drawer is in full state
+                }
+              }
+            }
+          }, 2000);
+        });
+      });
+
+      const toggleButton = document.getElementById("toggleButton");
+      toggleButton.addEventListener('click', function () {
+        const drawer = document.getElementById("infoDrawer");
+        if (drawer.classList.contains('open')) {
+          drawer.classList.toggle('full');
+        }
+      });
+
+      function updateTabs() {
+        const tabsContainer = document.getElementById("tabsContainer");
+        tabsContainer.innerHTML = ''; // Clear existing tabs
+
+        Object.keys(markersActive).forEach(tag => {
+          const tab = document.createElement('div');
+          tab.className = 'tab';
+          tab.textContent = tag; // Using tag as tab title
+          tab.onclick = () => showContent(tag);
+          tabsContainer.appendChild(tab);
+        });
+
+        if (Object.keys(markersActive).length > 0) {
+          document.getElementById("infoDrawer").classList.add("open");
+        } else {
+          document.getElementById("infoDrawer").classList.remove("open", "full");
+        }
+      }
+
+      function showContent(tag) {
+        const content = document.getElementById("infoContent");
+        fetch(`details/${tag}.html`)
+          .then(response => response.text())
+          .then(data => {
+            content.innerHTML = data;
+          });
+      }
+    });
+  </script>
+</body>
+</html>
