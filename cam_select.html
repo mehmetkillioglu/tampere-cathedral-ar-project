@@ -214,7 +214,7 @@
 
     // Update aspect ratios when camera is selected
     document.getElementById('cameraSelector').addEventListener('change', async (event) => {
-      await initCamera(event.target.value);
+      await initCamera(event.target.value, '720p');
     });
 
     // Populate camera selection dropdown
