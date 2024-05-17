@@ -57,10 +57,20 @@
       overflow: auto;
       background: #f0f0f0;
     }
+
+    #reloadButton {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: #f0f0f0;
+      padding: 10px;
+      cursor: pointer;
+    }
     #zoomButtons {
       position: fixed;
       top: 90px;
-      left: 10px;
+      right: 10px;
       z-index: 10000;
       display: flex;
       flex-direction: column;
@@ -126,35 +136,34 @@
     <div id="infoContent">Information will be loaded here</div>
   </div>
 
-  <div id="cameraInfoViewer"></div>
+  <!-- <div id="cameraInfoViewer"></div> -->
   <select id="cameraSelector"></select>
-  <select id="aspectRatioSelector">
-  </select>
   <div id="zoomButtons">
     <div class="zoomButton" data-zoom="1">1x</div>
     <div class="zoomButton" data-zoom="2">2x</div>
     <div class="zoomButton" data-zoom="5">5x</div>
   </div>
+  <div id="reloadCameraButton" style="position: fixed; top: 10px; right: 10px; z-index: 1000;">
+    <div><button onclick="reloadCamera('720p')">Reload Camera 720p</button></div>
+    <div><button onclick="reloadCamera('1080p')">Reload Camera 1080p</button></div>
+  </div>
 
   <script>
     let currentStream;
 
-    async function initCamera(deviceId) {
+    async function initCamera(deviceId, resolution) {
       console.log('Initializing camera with deviceId:', deviceId);
       if (currentStream) {
         currentStream.getTracks().forEach(track => track.stop());
       }
       console.log('Camera stopped');
-      const CameraInfoViewer = document.getElementById('cameraInfoViewer');
-      CameraInfoViewer.innerHTML = 'Camera Info of ' + deviceId + ':<br><br>';
-      CameraInfoViewer.style.fontSize = '6pt';
       
       let constraints = {
         video: {
           deviceId: deviceId ? { exact: deviceId } : undefined,
           aspectRatio: { ideal: 16/9},
-          width: { min: 1280, ideal: 1920, max: 1920 },
-          height: { min: 720, ideal: 1080, max: 1920 },
+          width: resolution === '720p' ? { min: 1280, ideal: 1280, max: 1920 } : { min: 1920, ideal: 1920, max: 1920 },
+          height: resolution === '720p' ? { min: 720, ideal: 720, max: 1080 } : { min: 1080, ideal: 1080, max: 1920 },
         }
       };
       console.log('Trying to initialize camera with constraints:', constraints);
@@ -186,10 +195,6 @@
       
       const capabilities = videoTrack.getCapabilities();
       const settings = videoTrack.getSettings();
-      CameraInfoViewer.innerHTML += JSON.stringify(capabilities, null, 2);
-      CameraInfoViewer.innerHTML += '<br><br>';
-      CameraInfoViewer.innerHTML += JSON.stringify(settings, null, 2);
-      
 
       if (capabilities.exposureMode) {
         videoTrack.applyConstraints({ advanced: [{ exposureMode: 'continuous' }] });
@@ -199,24 +204,13 @@
       video.srcObject = currentStream;
     }
 
-    // Periodically update the camera info every 1 second if ite is initialized
-    async function updateCameraInfo() {
-      if (currentStream) {
-        const videoTracks = currentStream.getVideoTracks();
-        const videoTrack = videoTracks[0];
-        const capabilities = videoTrack.getCapabilities();
-        const settings = videoTrack.getSettings();
-        const CameraInfoViewer = document.getElementById('cameraInfoViewer');
-        CameraInfoViewer.innerHTML = JSON.stringify(capabilities, null, 2);
-        CameraInfoViewer.style.fontSize = '6pt';
-        CameraInfoViewer.innerHTML += '<br><br>';
-        CameraInfoViewer.innerHTML += JSON.stringify(settings, null, 2);
-        CameraInfoViewer.innerHTML += '<br><br>';
-        CameraInfoViewer.innerHTML += new Date().toLocaleTimeString();
+
+    function reloadCamera(resolution) {
+      const cameraSelector = document.getElementById('cameraSelector');
+      if (cameraSelector.length > 0) {
+        initCamera(cameraSelector.value, resolution);
       }
     }
-    setInterval(updateCameraInfo, 1000);
-
 
     // Update aspect ratios when camera is selected
     document.getElementById('cameraSelector').addEventListener('change', async (event) => {
