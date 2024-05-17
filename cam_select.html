@@ -48,10 +48,15 @@
     #aspectRatioSelector {
       top: 50px;
     }
-    /* .zoomButton {
-      left: auto;
-      right: 10px;
-    } */
+    #cameraInfoViewer {
+      position: fixed;
+      top: 500px;
+      padding: 20px;
+      left: 0;
+      right: 0;
+      overflow: auto;
+      background: #f0f0f0;
+    }
     #zoomButtons {
       position: fixed;
       top: 90px;
@@ -66,13 +71,30 @@
       background: #f0f0f0;
       cursor: pointer;
     }
+    .arjs-loader {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      color: white;
+    }
   </style>
 </head>
 <body style="margin: 0; overflow: hidden">
   <div class="arjs-loader">
     <div>Loading, please wait...</div>
   </div>
-  <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: true;">
+  <a-scene vr-mode-ui="enabled: false;" renderer="logarithmicDepthBuffer: true;" embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
     <a-nft type="nft" url="data/melek/melek" tag="melek" tag_id="melek01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/resurrection/the_resurrection" tag="resurrection" tag_id="resurrection01" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
     <a-nft type="nft" url="data/resurrection/the_resurrection2" tag="resurrection" tag_id="resurrection02" smooth="true" smoothCount="10" smoothTolerance=".01" smoothThreshold="5"></a-nft>
@@ -104,11 +126,9 @@
     <div id="infoContent">Information will be loaded here</div>
   </div>
 
+  <div id="cameraInfoViewer"></div>
   <select id="cameraSelector"></select>
   <select id="aspectRatioSelector">
-    <option value="4:3">4:3</option>
-    <option value="16:9">16:9</option>
-    <option value="1:1">1:1</option>
   </select>
   <div id="zoomButtons">
     <div class="zoomButton" data-zoom="1">1x</div>
@@ -116,38 +136,92 @@
     <div class="zoomButton" data-zoom="5">5x</div>
   </div>
 
-  <!-- <button class="zoomButton" data-zoom="1">1x</button>
-  <button class="zoomButton" data-zoom="2">2x</button>
-  <button class="zoomButton" data-zoom="5">5x</button> -->
-
   <script>
     let currentStream;
 
-    // Function to initialize camera
     async function initCamera(deviceId) {
+      console.log('Initializing camera with deviceId:', deviceId);
       if (currentStream) {
         currentStream.getTracks().forEach(track => track.stop());
       }
-      const constraints = {
+      console.log('Camera stopped');
+      const CameraInfoViewer = document.getElementById('cameraInfoViewer');
+      CameraInfoViewer.innerHTML = 'Camera Info of ' + deviceId + ':<br><br>';
+      CameraInfoViewer.style.fontSize = '6pt';
+      
+      let constraints = {
         video: {
           deviceId: deviceId ? { exact: deviceId } : undefined,
-          aspectRatio: 16/9,
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
+          aspectRatio: { ideal: 16/9},
+          width: { min: 1280, ideal: 1920, max: 1920 },
+          height: { min: 720, ideal: 1080, max: 1920 },
         }
       };
-      currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+      console.log('Trying to initialize camera with constraints:', constraints);
+      try {
+        currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+        console.log('Camera initialized with the provided constraints');
+      } catch (error) {
+        console.error('Could not initialize camera with the provided constraints:', error);
+        // Relax the constraints and try again
+        constraints = {
+          video: {
+            deviceId: deviceId ? { exact: deviceId } : undefined,
+            aspectRatio: { ideal: 16/9},
+            width: { min: 640, ideal: 1280, max: 1920 },
+            height: { min: 480, ideal: 720, max: 1080 },
+          }
+        };
+        try {
+          currentStream = await navigator.mediaDevices.getUserMedia(constraints);
+          console.log('Camera initialized with the provided constraints');
+        } catch (error) {
+          console.error('Could not initialize camera with the relaxed constraints:', error);
+          return;
+        }
+      }
+
       const videoTracks = currentStream.getVideoTracks();
       const videoTrack = videoTracks[0];
-      const capabilities = videoTrack.getCapabilities();
       
+      const capabilities = videoTrack.getCapabilities();
+      const settings = videoTrack.getSettings();
+      CameraInfoViewer.innerHTML += JSON.stringify(capabilities, null, 2);
+      CameraInfoViewer.innerHTML += '<br><br>';
+      CameraInfoViewer.innerHTML += JSON.stringify(settings, null, 2);
+      
+
       if (capabilities.exposureMode) {
         videoTrack.applyConstraints({ advanced: [{ exposureMode: 'continuous' }] });
       }
 
-      const video = document.querySelector('video');
+      const video = document.querySelector('#arjs-video');
       video.srcObject = currentStream;
     }
+
+    // Periodically update the camera info every 1 second if ite is initialized
+    async function updateCameraInfo() {
+      if (currentStream) {
+        const videoTracks = currentStream.getVideoTracks();
+        const videoTrack = videoTracks[0];
+        const capabilities = videoTrack.getCapabilities();
+        const settings = videoTrack.getSettings();
+        const CameraInfoViewer = document.getElementById('cameraInfoViewer');
+        CameraInfoViewer.innerHTML = JSON.stringify(capabilities, null, 2);
+        CameraInfoViewer.style.fontSize = '6pt';
+        CameraInfoViewer.innerHTML += '<br><br>';
+        CameraInfoViewer.innerHTML += JSON.stringify(settings, null, 2);
+        CameraInfoViewer.innerHTML += '<br><br>';
+        CameraInfoViewer.innerHTML += new Date().toLocaleTimeString();
+      }
+    }
+    setInterval(updateCameraInfo, 1000);
+
+
+    // Update aspect ratios when camera is selected
+    document.getElementById('cameraSelector').addEventListener('change', async (event) => {
+      await initCamera(event.target.value);
+    });
 
     // Populate camera selection dropdown
     async function populateCameraOptions() {
@@ -163,20 +237,6 @@
       });
     }
 
-    // Handle camera selection change
-    document.getElementById('cameraSelector').addEventListener('change', (event) => {
-      initCamera(event.target.value);
-    });
-
-    // Handle aspect ratio change
-    document.getElementById('aspectRatioSelector').addEventListener('change', (event) => {
-      const [w, h] = event.target.value.split(':').map(Number);
-      const aspectRatio = w / h;
-      const video = document.querySelector('video');
-      video.style.width = `${aspectRatio * 100}%`;
-      video.style.height = '100%';
-    });
-
     // Handle zoom buttons
     document.querySelectorAll('.zoomButton').forEach(button => {
       button.addEventListener('click', () => {
@@ -188,23 +248,23 @@
         if (capabilities.zoom) {
           videoTrack.applyConstraints({ advanced: [{ zoom: zoomLevel }] });
         }
+        updateCameraInfo();
       });
     });
-
+  
     // Initialize on page load
     window.addEventListener('load', async () => {
-      await populateCameraOptions();
-      const cameraSelector = document.getElementById('cameraSelector');
-      if (cameraSelector.length > 0) {
-        initCamera(cameraSelector.value);
-      }
+        await populateCameraOptions();
+        const cameraSelector = document.getElementById('cameraSelector');
+        if (cameraSelector.length > 0) {
+          initCamera(cameraSelector.value);
+        }
     });
 
     // The rest of your marker detection code...
     document.addEventListener('DOMContentLoaded', function () {
       const markersActive = {};
       const tagTimeouts = {};
-
       document.querySelectorAll("a-nft").forEach((marker) => {
         const tag = marker.getAttribute("tag");
         marker.addEventListener("markerFound", function () {
