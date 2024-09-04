@@ -162,6 +162,7 @@
       let constraints = {
         video: {
           deviceId: deviceId ? { exact: deviceId } : undefined,
+          facingMode: { exact: 'environment' }, // Ensure we request the back camera
           aspectRatio: { ideal: 16/9},
         }
       };
